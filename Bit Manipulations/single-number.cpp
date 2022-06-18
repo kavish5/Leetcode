@@ -1,7 +1,7 @@
 /*
-9 + 1 = 10; carry 1; value changes
-Other numbers - just value changes
-Ensure carry is not set
+Approach 1 is to add element in set and pop out if present.
+Approach 2 is to use XOR property which nullify every repeating numeric
+element
 */
 #include <algorithm>
 #include <bitset>
@@ -36,27 +36,18 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  vector<int> plusOne(vector<int>& digits) {
-    int carry = 1;
-    for (int i = digits.size() - 1; i >= 0; i--) {
-      if (digits[i] == 9) {
-        digits[i] = 0;
-      } else {
-        digits[i] += carry;
-        carry = 0;
-        break;
-      }
+  int singleNumber(vector<int>& nums) {
+    int res = 0;
+    for (auto num : nums) {
+      res ^= num;
     }
-    if (carry == 1) {
-      digits.insert(digits.begin(), 1);
-    }
-    return digits;
+    return res;
   }
 };
 
 int main() {
   Solution s;
-  vector<int> digits = {1, 2, 3};
-  cout << s.plusOne(digits) << endl;
+  vector<int> digits = {1, 2, 3, 2, 1};
+  cout << s.singleNumber(digits) << endl;
   return 0;
 }

@@ -1,7 +1,7 @@
 /*
-9 + 1 = 10; carry 1; value changes
-Other numbers - just value changes
-Ensure carry is not set
+Approach 1 could be naive approach of mod by 2 followed by divide by 2.
+Approach 2 could be to to AND number with N and N-1 like 1000 & 0111 resulting
+in 0
 */
 #include <algorithm>
 #include <bitset>
@@ -36,27 +36,15 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  vector<int> plusOne(vector<int>& digits) {
-    int carry = 1;
-    for (int i = digits.size() - 1; i >= 0; i--) {
-      if (digits[i] == 9) {
-        digits[i] = 0;
-      } else {
-        digits[i] += carry;
-        carry = 0;
-        break;
-      }
-    }
-    if (carry == 1) {
-      digits.insert(digits.begin(), 1);
-    }
-    return digits;
+  bool isPowerOfTwo(int n) {
+    if (n == 0) return false;
+    return (n & (n - 1)) == 0;
   }
 };
 
 int main() {
   Solution s;
-  vector<int> digits = {1, 2, 3};
-  cout << s.plusOne(digits) << endl;
+  int n = 16;
+  cout << s.isPowerOfTwo(n) << endl;
   return 0;
 }

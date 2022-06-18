@@ -1,8 +1,3 @@
-/*
-9 + 1 = 10; carry 1; value changes
-Other numbers - just value changes
-Ensure carry is not set
-*/
 #include <algorithm>
 #include <bitset>
 #include <cassert>
@@ -36,27 +31,18 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  vector<int> plusOne(vector<int>& digits) {
-    int carry = 1;
-    for (int i = digits.size() - 1; i >= 0; i--) {
-      if (digits[i] == 9) {
-        digits[i] = 0;
-      } else {
-        digits[i] += carry;
-        carry = 0;
-        break;
-      }
+  int missingNumber(vector<int>& nums) {
+    int res = 0;
+    for (int i = 0; i < nums.size(); i++) {
+      res ^= (i + 1) ^ nums[i];
     }
-    if (carry == 1) {
-      digits.insert(digits.begin(), 1);
-    }
-    return digits;
+    return res;
   }
 };
 
 int main() {
   Solution s;
-  vector<int> digits = {1, 2, 3};
-  cout << s.plusOne(digits) << endl;
+  vector<int> num = {2, 0, 1};
+  cout << s.missingNumber(num) << endl;
   return 0;
 }

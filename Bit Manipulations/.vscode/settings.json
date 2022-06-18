@@ -2,6 +2,10 @@
 	"C_Cpp.errorSquiggles": "Enabled",
 	"files.associations": {
 		"variant": "cpp",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"bitset": "cpp",
+		"cmath": "cpp",
+		"complex": "cpp",
+		"ostream": "cpp"
 	}
 }

@@ -1,7 +1,9 @@
 /*
-9 + 1 = 10; carry 1; value changes
-Other numbers - just value changes
-Ensure carry is not set
+Approach 1 is to iterate through string and increment counter on every occurence
+of character 1.
+Approach 2 could be to to AND number with 1 and then add to result. Ensure to
+left shift every time the number. This would give us the number of 1s in the
+number.
 */
 #include <algorithm>
 #include <bitset>
@@ -36,27 +38,18 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  vector<int> plusOne(vector<int>& digits) {
-    int carry = 1;
-    for (int i = digits.size() - 1; i >= 0; i--) {
-      if (digits[i] == 9) {
-        digits[i] = 0;
-      } else {
-        digits[i] += carry;
-        carry = 0;
-        break;
-      }
+  vector<int> countBits(int n) {
+    vector<int> res(n + 1, 0);
+    for (int i = 1; i <= n; i++) {
+      res[i] = res[i >> 1] + (i & 1);
     }
-    if (carry == 1) {
-      digits.insert(digits.begin(), 1);
-    }
-    return digits;
+    return res;
   }
 };
 
 int main() {
   Solution s;
-  vector<int> digits = {1, 2, 3};
-  cout << s.plusOne(digits) << endl;
+  int n = 5;
+  cout << s.countBits(n) << endl;
   return 0;
 }

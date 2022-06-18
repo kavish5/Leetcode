@@ -1,8 +1,3 @@
-/*
-9 + 1 = 10; carry 1; value changes
-Other numbers - just value changes
-Ensure carry is not set
-*/
 #include <algorithm>
 #include <bitset>
 #include <cassert>
@@ -36,27 +31,21 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  vector<int> plusOne(vector<int>& digits) {
-    int carry = 1;
-    for (int i = digits.size() - 1; i >= 0; i--) {
-      if (digits[i] == 9) {
-        digits[i] = 0;
-      } else {
-        digits[i] += carry;
-        carry = 0;
-        break;
-      }
+  uint32_t reverseBits(uint32_t n) {
+    uint32_t res = 0;
+    for (int i = 0; i < 32; i++) {
+      res <<= 1;
+      res |= (n & 1);
+      n >>= 1;
     }
-    if (carry == 1) {
-      digits.insert(digits.begin(), 1);
-    }
-    return digits;
+    return res;
   }
 };
 
 int main() {
   Solution s;
-  vector<int> digits = {1, 2, 3};
-  cout << s.plusOne(digits) << endl;
+  // Might give warning
+  uint32_t digits = 00000010100101000001111010011100;
+  cout << s.reverseBits(digits) << endl;
   return 0;
 }

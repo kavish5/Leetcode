@@ -1,3 +1,11 @@
+/*
+1 + 1 = 10; carry 1
+10 + 1 = 11; carry 1
+1 + 0 = 1; carry 0
+0 + 1 = 1; carry 0
+0 + 0 = 0; carry 0
+1 can be carry
+*/
 #include <algorithm>
 #include <bitset>
 #include <cassert>
