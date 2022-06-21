@@ -31,23 +31,17 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  // Sort the arr by 1s in binary representation of each number.
-  vector<int> sortByBits(vector<int>& arr) {
-    sort(arr.begin(), arr.end(), [](int a, int b) {
-      std::bitset<32> bits_a(a);
-      std::bitset<32> bits_b(b);
-      if (bits_a.count() == bits_b.count()) {
-        return a < b;
-      }
-      return bits_a.count() < bits_b.count();
-    });
-    return arr;
+  int findComplement(int num) {
+    if (num == 0) return 1;
+    int count = log2(num) + 1;
+    int mask = pow(2, count) - 1;
+    return mask ^ num;
   }
 };
 
 int main() {
   Solution sol;
-  vector<int> arr = {1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1};
-  cout << sol.sortByBits(arr) << endl;
+  int n = 5;
+  cout << sol.findComplement(n) << endl;
   return 0;
 }

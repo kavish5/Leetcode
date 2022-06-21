@@ -31,23 +31,20 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  // Sort the arr by 1s in binary representation of each number.
-  vector<int> sortByBits(vector<int>& arr) {
-    sort(arr.begin(), arr.end(), [](int a, int b) {
-      std::bitset<32> bits_a(a);
-      std::bitset<32> bits_b(b);
-      if (bits_a.count() == bits_b.count()) {
-        return a < b;
+  bool hasAlternatingBits(int n) {
+    std::bitset<32> bits_n(n);
+    for (int i = 0; i < log(n) + 1; i++) {
+      if (bits_n[i] == bits_n[i + 1]) {
+        return false;
       }
-      return bits_a.count() < bits_b.count();
-    });
-    return arr;
+    }
+    return true;
   }
 };
 
 int main() {
   Solution sol;
-  vector<int> arr = {1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1};
-  cout << sol.sortByBits(arr) << endl;
+  int n = 7;
+  cout << sol.hasAlternatingBits(n) << endl;
   return 0;
 }

@@ -31,23 +31,24 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  // Sort the arr by 1s in binary representation of each number.
-  vector<int> sortByBits(vector<int>& arr) {
-    sort(arr.begin(), arr.end(), [](int a, int b) {
-      std::bitset<32> bits_a(a);
-      std::bitset<32> bits_b(b);
-      if (bits_a.count() == bits_b.count()) {
-        return a < b;
+  int binaryGap(int n) {
+    int globalCount = 0;
+    int localCount = -32;
+    while (n > 0) {
+      if (n & 1) {
+        globalCount = max(globalCount, localCount);
+        localCount = 0;
       }
-      return bits_a.count() < bits_b.count();
-    });
-    return arr;
+      localCount++;
+      n = n >> 1;
+    }
+    return globalCount;
   }
 };
 
 int main() {
   Solution sol;
-  vector<int> arr = {1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1};
-  cout << sol.sortByBits(arr) << endl;
+  int num = 8;
+  cout << sol.binaryGap(num) << endl;
   return 0;
 }

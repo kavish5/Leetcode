@@ -31,23 +31,21 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  // Sort the arr by 1s in binary representation of each number.
-  vector<int> sortByBits(vector<int>& arr) {
-    sort(arr.begin(), arr.end(), [](int a, int b) {
-      std::bitset<32> bits_a(a);
-      std::bitset<32> bits_b(b);
-      if (bits_a.count() == bits_b.count()) {
-        return a < b;
-      }
-      return bits_a.count() < bits_b.count();
-    });
-    return arr;
+  int minBitFlips(int start, int goal) {
+    int value = start ^ goal;
+    int count = 0;
+    while (value) {
+      value = value & value - 1;
+      count++;
+    }
+    return count;
   }
 };
 
 int main() {
   Solution sol;
-  vector<int> arr = {1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1};
-  cout << sol.sortByBits(arr) << endl;
+  int start = 10;
+  int goal = 7;
+  cout << sol.minBitFlips(start, goal) << endl;
   return 0;
 }

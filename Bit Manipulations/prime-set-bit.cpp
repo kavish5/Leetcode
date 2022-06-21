@@ -31,23 +31,23 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  // Sort the arr by 1s in binary representation of each number.
-  vector<int> sortByBits(vector<int>& arr) {
-    sort(arr.begin(), arr.end(), [](int a, int b) {
-      std::bitset<32> bits_a(a);
-      std::bitset<32> bits_b(b);
-      if (bits_a.count() == bits_b.count()) {
-        return a < b;
-      }
-      return bits_a.count() < bits_b.count();
-    });
-    return arr;
+  int countPrimeSetBits(int left, int right) {
+    std::vector<int> v = {2, 3, 5, 7, 11, 13, 17, 19};
+    int res = 0;
+    while (left <= right) {
+      std::bitset<32> bits_n(left);
+      int count = bits_n.count();
+      res += std::count(v.begin(), v.end(), count);
+      left++;
+    }
+    return res;
   }
 };
 
 int main() {
   Solution sol;
-  vector<int> arr = {1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1};
-  cout << sol.sortByBits(arr) << endl;
+  int left = 10;
+  int right = 15;
+  cout << sol.countPrimeSetBits(left, right) << endl;
   return 0;
 }
