@@ -31,24 +31,23 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  int countAc(int n) {
-    int remainder = n % 100;
-    int quotient = n / 100;
-    if (quotient + remainder > 10) {
-      return -1;
+  int firstUniqueChar(string s) {
+    int count[26] = {};
+    for (char c : s) {
+      count[c - 'a'] += 1;
     }
-    return quotient + remainder;
+    for (int i = 0; i < s.length(); i++) {
+      if (count[s[i] - 'a'] == 1) {
+        return i;
+      }
+    }
+    return -1;
   }
 };
 
 int main() {
   Solution sol;
-  int test;
-  cin >> test;
-  while (test--) {
-    int num;
-    cin >> num;
-    cout << sol.countAc(num) << endl;
-  }
+  std::string input = "abcaabd";
+  cout << sol.firstUniqueChar(input) << endl;
   return 0;
 }
