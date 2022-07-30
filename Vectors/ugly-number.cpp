@@ -17,6 +17,7 @@
 #include <sstream>
 #include <stack>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 using namespace std;
@@ -31,23 +32,34 @@ ostream& operator<<(ostream& os, const vector<S>& vector) {
 
 class Solution {
  public:
-  int hammingDistance(int x, int y) {
-    // int res = 0;
-    // int temp = x ^ y;
-    // while (temp) {
-    //   temp = temp & (temp - 1);
-    //   res += 1;
-    // }
-    // return res;
+  bool isUgly(int n) {
+    if (n == 1) return true;
+    while (n) {
+      if (n == 1) return true;
+      if (!(n % 2))
+        n /= 2;
+      else if (!(n % 3))
+        n /= 3;
+      else if (!(n % 5))
+        n /= 5;
+      else
+        break;
+    }
 
-    return bitset<32>(x ^ y).count();
+    return false;
   }
+
+  // bool isUgly(int num) {
+  //   if (n > 0)
+  //     for (int i = 2; i < 6; i++)
+  //       while (n % i == 0) n /= i;
+  //   return n == 1;
+  // }
 };
 
 int main() {
   Solution sol;
-  int x = 3;
-  int y = 1;
-  cout << sol.hammingDistance(x, y) << endl;
+  int num = 19;
+  cout << sol.isUgly(num) << endl;
   return 0;
 }
