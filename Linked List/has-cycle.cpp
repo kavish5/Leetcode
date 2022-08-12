@@ -38,20 +38,20 @@ struct ListNode {
 
 class Solution {
  public:
-  void deleteNode(ListNode* node) {
-    ListNode* prev;
-    // Whole thing can be reduced to simple replacement of data
-    // Take next node and replace data and address
-    if (node == NULL)
-      return;
-    else {
-      while (node->next != NULL) {
-        node->data = node->next->data;
-        prev = node;
-        node = node->next;
-      }
-      prev->next = NULL;
+  bool hasCycle(ListNode* head) {
+    if (head == NULL) {
+      return false;
     }
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast && fast->next) {
+      slow = slow->next;
+      fast = fast->next->next;
+      if (slow == fast) {
+        return true;
+      }
+    }
+    return false;
   }
 };
 
@@ -65,6 +65,6 @@ int main() {
   head->next->next->next->next->next = new ListNode(6);
   head->next->next->next->next->next->next = new ListNode(7);
   head->next->next->next->next->next->next->next = new ListNode(8);
-  cout << sol.middleNode(head) << endl;
+  cout << sol.hasCycle(head) << endl;
   return 0;
 }

@@ -38,20 +38,17 @@ struct ListNode {
 
 class Solution {
  public:
-  void deleteNode(ListNode* node) {
-    ListNode* prev;
-    // Whole thing can be reduced to simple replacement of data
-    // Take next node and replace data and address
-    if (node == NULL)
-      return;
-    else {
-      while (node->next != NULL) {
-        node->data = node->next->data;
-        prev = node;
-        node = node->next;
-      }
-      prev->next = NULL;
+  ListNode* reverseList(ListNode* head) {
+    ListNode* current = head;
+    ListNode *prev = NULL, *next = NULL;
+    while (current != NULL) {
+      next = current->next;
+      current->next = prev;
+      prev = current;
+      current = next;
     }
+    head = prev;
+    return head;
   }
 };
 
@@ -65,6 +62,6 @@ int main() {
   head->next->next->next->next->next = new ListNode(6);
   head->next->next->next->next->next->next = new ListNode(7);
   head->next->next->next->next->next->next->next = new ListNode(8);
-  cout << sol.middleNode(head) << endl;
+  cout << sol.reverseList(head) << endl;
   return 0;
 }
