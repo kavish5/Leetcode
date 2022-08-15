@@ -41,43 +41,41 @@ struct TreeNode {
 };
 
 class Solution {
+  int count = 0;
+
  public:
-  vector<vector<int>> levelOrderBottom(TreeNode* root) {
-    vector<vector<int>> result;
+  int kthSmallest(TreeNode* root, int k) {
+    TreeNode* node = getKthSmallestElement(root, k);
+    return node->val;
+  }
+
+  TreeNode* getKthSmallestElement(TreeNode* root, int k) {
     if (!root) {
-      return result;
+      return NULL;
     }
-    queue<TreeNode*> q;
-    q.push(root);
-    while (!q.empty()) {
-      int n = q.size();
-      vector<int> nodes(n);
-      for (int i = 0; i < n; i++) {
-        TreeNode* node = q.front();
-        q.pop();
-        nodes[i] = node->val;
-        if (node->left) {
-          q.push(node->left);
-        }
-        if (node->right) {
-          q.push(node->right);
-        }
-      }
-      result.push_back(nodes);
+    TreeNode* left = getKthSmallestElement(root->left, k);
+    if (left) {
+      return left;
     }
-    return result;
+    count++;
+    if (count == k) {
+      return root;
+    }
+    return getKthSmallestElement(root->right, k);
   }
 };
 
 int main() {
   Solution sol;
   TreeNode* root = new TreeNode(5);
-  root->left = new TreeNode(2);
-  root->left->left = new TreeNode(1);
+  root->left = new TreeNode(3);
+  root->left->left = new TreeNode(2);
+  root->left->left->left = new TreeNode(1);
   root->left->right = new TreeNode(4);
   root->right = new TreeNode(8);
   root->right->left = new TreeNode(6);
   root->right->right = new TreeNode(9);
-  cout << sol.levelOrderBottom(root) << endl;
+  int k = 4;
+  cout << sol.kthSmallest(root, k) << endl;
   return 0;
 }

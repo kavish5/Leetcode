@@ -42,42 +42,35 @@ struct TreeNode {
 
 class Solution {
  public:
-  vector<vector<int>> levelOrderBottom(TreeNode* root) {
-    vector<vector<int>> result;
-    if (!root) {
-      return result;
+  bool isSameTree(TreeNode* base, TreeNode* sub) {
+    if (!base && !sub) {
+      return true;
     }
-    queue<TreeNode*> q;
-    q.push(root);
-    while (!q.empty()) {
-      int n = q.size();
-      vector<int> nodes(n);
-      for (int i = 0; i < n; i++) {
-        TreeNode* node = q.front();
-        q.pop();
-        nodes[i] = node->val;
-        if (node->left) {
-          q.push(node->left);
-        }
-        if (node->right) {
-          q.push(node->right);
-        }
-      }
-      result.push_back(nodes);
+    if (!base || !sub || base->val != sub->val) {
+      return false;
     }
-    return result;
+    return isSameTree(base->left, sub->left) &&
+           isSameTree(base->right, sub->right);
   }
 };
 
 int main() {
   Solution sol;
-  TreeNode* root = new TreeNode(5);
-  root->left = new TreeNode(2);
-  root->left->left = new TreeNode(1);
-  root->left->right = new TreeNode(4);
-  root->right = new TreeNode(8);
-  root->right->left = new TreeNode(6);
-  root->right->right = new TreeNode(9);
-  cout << sol.levelOrderBottom(root) << endl;
+  TreeNode* rootA = new TreeNode(5);
+  rootA->left = new TreeNode(2);
+  rootA->left->left = new TreeNode(1);
+  rootA->left->right = new TreeNode(4);
+  rootA->right = new TreeNode(8);
+  rootA->right->left = new TreeNode(6);
+  rootA->right->right = new TreeNode(9);
+
+  TreeNode* rootB = new TreeNode(5);
+  rootB->left = new TreeNode(1);
+  rootB->left->left = new TreeNode(2);
+  rootB->left->right = new TreeNode(8);
+  rootB->right = new TreeNode(4);
+  rootB->right->left = new TreeNode(9);
+  rootB->right->right = new TreeNode(6);
+  cout << sol.isSameTree(rootA, rootB) << endl;
   return 0;
 }

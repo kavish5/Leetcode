@@ -42,30 +42,22 @@ struct TreeNode {
 
 class Solution {
  public:
-  vector<vector<int>> levelOrderBottom(TreeNode* root) {
-    vector<vector<int>> result;
+  TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
     if (!root) {
-      return result;
+      return NULL;
     }
-    queue<TreeNode*> q;
-    q.push(root);
-    while (!q.empty()) {
-      int n = q.size();
-      vector<int> nodes(n);
-      for (int i = 0; i < n; i++) {
-        TreeNode* node = q.front();
-        q.pop();
-        nodes[i] = node->val;
-        if (node->left) {
-          q.push(node->left);
-        }
-        if (node->right) {
-          q.push(node->right);
-        }
-      }
-      result.push_back(nodes);
+    if (root->val == p->val || root->val == q->val) {
+      return root;
     }
-    return result;
+    TreeNode* left = lowestCommonAncestor(root->left, p, q);
+    TreeNode* right = lowestCommonAncestor(root->right, p, q);
+    if (!left) {
+      return right;
+    }
+    if (!right) {
+      return left;
+    }
+    return root;
   }
 };
 
@@ -78,6 +70,10 @@ int main() {
   root->right = new TreeNode(8);
   root->right->left = new TreeNode(6);
   root->right->right = new TreeNode(9);
-  cout << sol.levelOrderBottom(root) << endl;
+
+  TreeNode* p = new TreeNode(1);
+  TreeNode* q = new TreeNode(4);
+
+  cout << sol.lowestCommonAncestor(root, p, q) << endl;
   return 0;
 }

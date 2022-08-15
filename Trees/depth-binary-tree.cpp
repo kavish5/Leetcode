@@ -42,30 +42,13 @@ struct TreeNode {
 
 class Solution {
  public:
-  vector<vector<int>> levelOrderBottom(TreeNode* root) {
-    vector<vector<int>> result;
+  int maxDepth(TreeNode* root) {
     if (!root) {
-      return result;
+      return 0;
     }
-    queue<TreeNode*> q;
-    q.push(root);
-    while (!q.empty()) {
-      int n = q.size();
-      vector<int> nodes(n);
-      for (int i = 0; i < n; i++) {
-        TreeNode* node = q.front();
-        q.pop();
-        nodes[i] = node->val;
-        if (node->left) {
-          q.push(node->left);
-        }
-        if (node->right) {
-          q.push(node->right);
-        }
-      }
-      result.push_back(nodes);
-    }
-    return result;
+    int dLeft = maxDepth(root->left);
+    int dRight = maxDepth(root->right);
+    return 1 + max(dLeft, dRight);
   }
 };
 
@@ -78,6 +61,6 @@ int main() {
   root->right = new TreeNode(8);
   root->right->left = new TreeNode(6);
   root->right->right = new TreeNode(9);
-  cout << sol.levelOrderBottom(root) << endl;
+  cout << sol.maxDepth(root) << endl;
   return 0;
 }

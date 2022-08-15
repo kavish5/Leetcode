@@ -42,30 +42,28 @@ struct TreeNode {
 
 class Solution {
  public:
-  vector<vector<int>> levelOrderBottom(TreeNode* root) {
-    vector<vector<int>> result;
-    if (!root) {
-      return result;
+  bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+    if (!root && !subRoot) {
+      return true;
     }
-    queue<TreeNode*> q;
-    q.push(root);
-    while (!q.empty()) {
-      int n = q.size();
-      vector<int> nodes(n);
-      for (int i = 0; i < n; i++) {
-        TreeNode* node = q.front();
-        q.pop();
-        nodes[i] = node->val;
-        if (node->left) {
-          q.push(node->left);
-        }
-        if (node->right) {
-          q.push(node->right);
-        }
-      }
-      result.push_back(nodes);
+    if (!root || !subRoot) {
+      return false;
     }
-    return result;
+    if (areIdenticals(root, subRoot)) {
+      return true;
+    }
+    return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+  }
+
+  bool areIdenticals(TreeNode* base, TreeNode* sub) {
+    if (!base && !sub) {
+      return true;
+    }
+    if (!base || !sub || base->val != sub->val) {
+      return false;
+    }
+    return areIdenticals(base->left, sub->left) &&
+           areIdenticals(base->right, sub->right);
   }
 };
 
@@ -78,6 +76,9 @@ int main() {
   root->right = new TreeNode(8);
   root->right->left = new TreeNode(6);
   root->right->right = new TreeNode(9);
-  cout << sol.levelOrderBottom(root) << endl;
+  TreeNode* subRoot = new TreeNode(8);
+  subRoot->left = new TreeNode(6);
+  subRoot->left->left = new TreeNode(9);
+  cout << sol.isSubtree(root, subRoot) << endl;
   return 0;
 }

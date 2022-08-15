@@ -42,28 +42,28 @@ struct TreeNode {
 
 class Solution {
  public:
-  vector<vector<int>> levelOrderBottom(TreeNode* root) {
-    vector<vector<int>> result;
+  vector<int> rightSideView(TreeNode* root) {
+    vector<int> result;
     if (!root) {
       return result;
     }
     queue<TreeNode*> q;
     q.push(root);
     while (!q.empty()) {
-      int n = q.size();
-      vector<int> nodes(n);
-      for (int i = 0; i < n; i++) {
-        TreeNode* node = q.front();
+      int size = q.size();
+      for (int i = 0; i < size; i++) {
+        TreeNode* temp = q.front();
         q.pop();
-        nodes[i] = node->val;
-        if (node->left) {
-          q.push(node->left);
+        if (i == size - 1) {
+          result.push_back(temp->val);
         }
-        if (node->right) {
-          q.push(node->right);
+        if (temp->left) {
+          q.push(temp->left);
+        }
+        if (temp->right) {
+          q.push(temp->right);
         }
       }
-      result.push_back(nodes);
     }
     return result;
   }
@@ -78,6 +78,6 @@ int main() {
   root->right = new TreeNode(8);
   root->right->left = new TreeNode(6);
   root->right->right = new TreeNode(9);
-  cout << sol.levelOrderBottom(root) << endl;
+  cout << sol.rightSideView(root) << endl;
   return 0;
 }
